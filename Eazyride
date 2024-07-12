@@ -1,0 +1,765 @@
+package EazyRide;
+
+import java.util.*;
+
+public class Eazyride {
+
+
+
+	public static void main(String[] args) {
+
+	Scanner sc = new Scanner(System.in);
+
+ System.out.println("Welcome to EazyRide");
+
+ System.out.println();
+
+ System.out.println("Register yourself to get logeed in");
+
+ System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
+
+ int wallet = 0;
+
+ User r = new User();
+
+ r.Register();
+
+	}
+
+}
+
+class User{ //Single class User
+
+	int wallet = 0;
+
+	int count1_1 = 5;
+
+	int count1_2 = 5;
+
+	int count2_1 = 5;
+
+	int count2_2 = 5;
+
+	int count3_1 = 5;
+
+	int count3_2 = 5;
+
+	int count4_1 = 5;
+
+	int count4_2 = 5;
+
+	int count5_1 = 5;
+
+	int count5_2 = 5;
+
+	Scanner sc = new Scanner(System.in);
+
+	String userName;
+
+	String password;
+
+	User users[] = new User[100]; //Object array to store the username and password
+
+	int registerCount=0;
+
+	User(String userName,String password)
+
+	{
+
+	this.userName = userName;
+
+	this.password = password;
+
+	}
+
+	public User() {
+
+	// TODO Auto-generated constructor stub
+
+	}
+
+	void Register()
+
+	{
+
+	System.out.println("Enter your Username"); //Get the user name
+
+ String userName = sc.nextLine();
+
+ System.out.println("Enter your Password"); //Get the password
+
+ String password = sc.nextLine();
+
+ if(registerCount>0) //Initialize number of registrations as zero
+
+ {
+
+ for(User i : users) 
+
+ {
+
+ if(userName.equals(i.userName)) 
+
+ {
+
+ System.out.println("Username Already Exists....Press 1 to login"); //Check for existing user
+
+ int choice = sc.nextInt();
+
+ if(choice==1) 
+
+ {
+
+ Login();
+
+ }
+
+ }
+
+ }
+
+ }
+
+ System.out.println("Re-enter your password to confirm"); //Password confirmation
+
+ String password1 = sc.nextLine();
+
+ if(password.equals(password1)) 
+
+ {
+
+ User u1 = new User(userName,password);
+
+ users[registerCount]=u1;
+
+ System.out.println("Registered Successfully");
+
+ System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
+
+ Login();
+
+ }
+
+ else 
+
+ {
+
+ System.out.println("Invalid Password Match....Register again..!");
+
+ Register();
+
+ }
+
+	}
+
+	void Login() //Login method to login the user
+
+	{
+
+	System.out.println("Welcome to login...!");
+
+	System.out.println("Enter your Username");
+
+ String userName = sc.nextLine();
+
+ System.out.println("Enter your Password");
+
+ String password = sc.nextLine();
+
+ System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
+
+ if(userName.equals(users[registerCount].userName) && password.equals(users[registerCount].password)) // user credential validation
+
+ {
+
+ registerCount++; //increases register count
+
+ System.out.println("Login Successful");
+
+ System.out.println("Welcome.....!"+userName);
+
+ WalletRecharge(); //redirects to wallet recharge after successful login
+
+ 
+
+ }
+
+ else 
+
+ {
+
+ System.out.println("Invalid username or Password.....\nPress 1 to try logging in again\nIf not registered press 2 to register!"); // If invalid user credentials then either redirect to register or login
+
+ int choice = sc.nextInt();
+
+ if(choice == 1)
+
+ { 
+
+ sc.nextLine();
+
+ Login();
+
+ }
+
+ else 
+
+ {
+
+ sc.nextLine();
+
+ Register();
+
+ }
+
+ } 
+
+	}
+
+	void WalletRecharge() { //Wallet recharge method
+
+	System.out.println("To continue the services kindly recharge your wallet with minimum 100 rupees\n1.Yes Recharge\n2.No exit");
+
+	int choice = sc.nextInt();
+
+	if(choice == 1) {
+
+	Recharge(); //Function to check 
+
+	System.out.println("Your available balance is "+wallet);
+
+	System.out.println("Press 1 to check places or 2 exit");
+
+	System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
+
+	int choice1 = sc.nextInt();
+
+	{
+
+	if(choice1 == 1)
+
+	{
+
+	CheckPlace();
+
+	}
+
+	else
+
+	{
+
+	Exit();
+
+	}
+
+	}
+
+	}
+
+	else {
+
+	Exit();
+
+	}
+
+	}
+
+	void Recharge() {
+
+	System.out.println("Enter the amount to be recharged");
+
+	int amount = sc.nextInt();
+
+	if(amount>=100) 
+
+	{
+
+	wallet = wallet + amount;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("You should atleast recharge with a minimum amount of 100 rupees");
+
+	Recharge();
+
+	}
+
+	}
+
+	void CheckPlace()
+
+	{
+
+	int cost = 0;
+
+	System.out.println("Choose your current location\n1.Main Entrance KSRCT\n2.KSRCE A-Block\n3.KSRCE F-BLOCK\n4.Swimming pool\n5.KSRIET");
+
+	int choice = sc.nextInt();
+
+	switch(choice) {
+
+	case 1:
+
+	{
+
+	System.out.println("Enter the estimated time of travel in minutes");
+
+	int time = sc.nextInt();
+
+	System.out.println("You are in need of \n1.Car\n2.Bike");
+
+	int choice1 = sc.nextInt();
+
+	if(choice1 == 1) 
+
+	{ if(count1_1>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_1=count1_1-1;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	else
+
+	{
+
+	if(count1_2>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_2--;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	
+
+	}
+
+	break;
+
+	case 2:
+
+	{
+
+	System.out.println("Enter the estimated time of travel in minutes");
+
+	int time = sc.nextInt();
+
+	System.out.println("You are in need of \n1.Car\n2.Bike");
+
+	int choice1 = sc.nextInt();
+
+	if(choice1 == 1) 
+
+	{
+
+	if(count2_2>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_2--;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	else
+
+	{
+
+	if(count2_2>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_2--;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	
+
+	}
+
+	break;
+
+	case 3:
+
+	{
+
+	System.out.println("Enter the estimated time of travel in minutes");
+
+	int time = sc.nextInt();
+
+	System.out.println("You are in need of \n1.Car\n2.Bike");
+
+	int choice1 = sc.nextInt();
+
+	if(choice1 == 1) 
+
+	{
+
+	if(count3_1>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_2--;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	else
+
+	{
+
+	if(count3_2>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_2--;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	
+
+	}
+
+	break;
+
+	case 4:
+
+	{
+
+	System.out.println("Enter the estimated time of travel in minutes");
+
+	int time = sc.nextInt();
+
+	System.out.println("You are in need of \n1.Car\n2.Bike");
+
+	int choice1 = sc.nextInt();
+
+	if(choice1 == 1) 
+
+	{
+
+	if(count4_1>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_2--;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	else
+
+	{
+
+	if(count4_2>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_2--;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	
+
+	}
+
+	break;
+
+	case 5:
+
+	{
+
+	System.out.println("Enter the estimated time of travel in minutes");
+
+	int time = sc.nextInt();
+
+	System.out.println("You are in need of \n1.Car\n2.Bike");
+
+	int choice1 = sc.nextInt();
+
+	if(choice1 == 1) 
+
+	{
+
+	if(count5_1>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_2--;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	else
+
+	{
+
+	if(count5_2>0)
+
+	{
+
+	cost = time*6;
+
+	CheckBalance(cost);
+
+	count1_2--;
+
+	}
+
+	else 
+
+	{
+
+	System.out.println("Sorry for the incovenience every vehicle is occupied\nTry again Later");
+
+	Exit();
+
+	}
+
+	}
+
+	
+
+	}
+
+	break;
+
+	default :
+
+	{
+
+	System.out.println("Invalid choice.....Try again");
+
+	CheckPlace();
+
+	}
+
+	}
+
+	wallet = wallet - cost;
+
+	System.out.println("Your cost of this ride would be "+cost);
+
+	System.out.println("Press 1 to confirm ride");
+
+	int n = sc.nextInt();
+
+	if(n == 1) {
+
+	System.out.println("Your Wallet balance is "+wallet);
+
+	System.out.println("Your vehicle is ready to pick you up...!");
+
+	System.out.println("Press 1 to enjoy ur EazyRide or press 2 to book another ride");
+
+	int a = sc.nextInt();
+
+	if(a == 1) 
+
+	{
+
+	System.out.println("Have an EazyRide");
+
+	Exit();
+
+	}
+
+	else 
+
+	{
+
+	CheckPlace();
+
+	}
+
+	}
+
+	}
+
+	void CheckBalance(int cost) {
+
+	if(cost>wallet) {
+
+	System.out.println("Insufficient balance...Press 1 to recharge");
+
+	int x = sc.nextInt();
+
+	if(x == 1)
+
+	{
+
+	WalletRecharge();
+
+	}
+
+	else
+
+	{
+
+	Exit();
+
+	}
+
+	
+
+	}
+
+	}
+
+	void Exit() {
+
+	System.out.println("Thank you...!...Visit again");
+
+	
+
+	}
+
+	
+
+}
